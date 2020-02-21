@@ -211,7 +211,7 @@ namespace casadi {
 
     /** \brief Export function in a specific language */
     void export_code_body(const std::string& lang,
-      std::ostream &stream, const Dict& options) const override;
+      std::ostream &stream, MatlabExport& mex, const Dict& options) const override;
 
     /// Substitute inplace, internal implementation
     void substitute_inplace(std::vector<MX>& vdef, std::vector<MX>& ex) const;

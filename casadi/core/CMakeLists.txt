@@ -188,6 +188,7 @@ set(CASADI_INTERNAL
   optistack.cpp               optistack_internal.cpp               optistack_internal.hpp
   serializer.cpp              serializing_stream.cpp
   casadi_c.cpp
+  matlab_export.cpp matlab_export.hpp
 
   # Runtime headers
   runtime/casadi_runtime.hpp

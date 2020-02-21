@@ -30,6 +30,7 @@
 #include "printable.hpp"
 #include <exception>
 #include <stack>
+#include "matlab_export.hpp"
 
 namespace casadi {
 
@@ -740,10 +741,11 @@ namespace casadi {
     std::string serialize(const Dict& opts=Dict()) const;
     void save(const std::string &fname, const Dict& opts=Dict()) const;
 
-    std::string export_code(const std::string& lang, const Dict& options=Dict()) const;
 #ifndef SWIG
+    std::string export_code(const std::string& lang, MatlabExport& mex, const Dict& options=Dict()) const;
+
     void export_code(const std::string& lang,
-      std::ostream &stream, const Dict& options=Dict()) const;
+      std::ostream &stream, MatlabExport& mex, const Dict& options=Dict()) const;
 #endif // SWIG
     ///@}
 #ifndef SWIG

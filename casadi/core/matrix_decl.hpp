@@ -33,6 +33,7 @@
 #include "generic_matrix.hpp"
 #include "generic_expression.hpp"
 #include "printable.hpp"
+#include "matlab_export.hpp"
 
 #include <random>
 #include <typeinfo>
@@ -1057,6 +1058,7 @@ namespace casadi {
     }
     ///@}
 
+#ifndef SWIG
     /** \brief Export matrix in specific language
      *
      * lang: only 'matlab' supported for now
@@ -1070,9 +1072,9 @@ namespace casadi {
      *               which doesn't allow numerical zero
      * \endverbatim
      */
-    void export_code(const std::string& lang,
-        std::ostream &stream=casadi::uout(), const Dict& options=Dict()) const;
-
+    void export_code(const std::string& lang, 
+        std::ostream &stream, MatlabExport& mex, const Dict& options=Dict()) const;
+#endif // SWIG
     /** Obtain information about sparsity */
     Dict info() const;
     #ifndef SWIG

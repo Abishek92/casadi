@@ -3556,7 +3556,7 @@ namespace casadi {
   }
 
   void SparsityInternal::export_code(const std::string& lang,
-      std::ostream &stream, const Dict& options) const {
+      std::ostream &stream, MatlabExport& mex, const Dict& options) const {
     casadi_assert(lang=="matlab", "Only matlab language supported for now.");
 
     // Default values for options
@@ -3598,27 +3598,16 @@ namespace casadi {
     // Print columns
     const casadi_int* colind = this->colind();
     const casadi_int* row = this->row();
-    stream << indent << name<< "_j = [";
-    bool first = true;
+
+    std::vector<casadi_int> cols;
     for (casadi_int i=0; i<size2(); ++i) {
       for (casadi_int el=colind[i]; el<colind[i+1]; ++el) {
-        if (!first) stream << ", ";
-        stream << (i+index_offset);
-        first = false;
+        cols.push_back(i);
       }
     }
-    stream << "];" << endl;
-
+    stream << indent << name<< "_j = " + mex.save(cols, index_offset) + ";";
     // Print rows
-    stream << indent << name << "_i = [";
-    first = true;
-    casadi_int nz = nnz();
-    for (casadi_int i=0; i<nz; ++i) {
-      if (!first) stream << ", ";
-      stream << (row[i]+index_offset);
-      first = false;
-    }
-    stream << "];" << endl;
+    stream << indent << name << "_i = " + mex.save(std::vector<casadi_int>(row, row+nnz()), index_offset) + ";";
 
     if (as_matrix) {
       // Generate matrix
@@ -3639,7 +3628,8 @@ namespace casadi {
 
     Dict opts;
     opts["name"] = "A";
-    export_code("matlab", mfile, opts);
+    MatlabExport mex(mfile_name);
+    export_code("matlab", mfile, mex, opts);
 
     // Issue spy command
     mfile << "spy(A);" << endl;

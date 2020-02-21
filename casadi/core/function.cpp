@@ -1107,14 +1107,15 @@ namespace casadi {
   }
 
   void Function::export_code(const std::string& lang,
-      std::ostream &stream, const Dict& options) const {
-    return (*this)->export_code(lang, stream, options);
+      std::ostream &stream, MatlabExport& mex, const Dict& options) const {
+    return (*this)->export_code(lang, stream, mex, options);
   }
 
   void Function::export_code(const std::string& lang,
       const std::string &fname, const Dict& options) const {
     std::ofstream stream(fname);
-    return (*this)->export_code(lang, stream, options);
+    MatlabExport mex(fname);
+    return (*this)->export_code(lang, stream, mex, options);
   }
 
 
@@ -1150,9 +1151,9 @@ namespace casadi {
     return FunctionInternal::deserialize(s);
   }
 
-  std::string Function::export_code(const std::string& lang, const Dict& options) const {
+  std::string Function::export_code(const std::string& lang, MatlabExport& mex, const Dict& options) const {
     std::stringstream ss;
-    (*this)->export_code(lang, ss, options);
+    (*this)->export_code(lang, ss, mex, options);
     return ss.str();
   }
 

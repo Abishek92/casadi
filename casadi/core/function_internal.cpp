@@ -1937,7 +1937,7 @@ namespace casadi {
     casadi_error("'get_reverse' not defined for " + class_name());
   }
 
-  void FunctionInternal::export_code(const std::string& lang, std::ostream &stream,
+  void FunctionInternal::export_code(const std::string& lang, std::ostream &stream, MatlabExport& mex,
       const Dict& options) const {
     casadi_error("'export_code' not defined for " + class_name());
   }

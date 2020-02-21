@@ -227,7 +227,7 @@ class CASADI_EXPORT SXFunction :
 
   /** \brief Export function in a specific language */
   void export_code_body(const std::string& lang,
-    std::ostream &stream, const Dict& options) const override;
+    std::ostream &stream, MatlabExport& mex, const Dict& options) const override;
 
   /// With just-in-time compilation using OpenCL
   bool just_in_time_opencl_;

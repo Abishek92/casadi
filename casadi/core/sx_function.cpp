@@ -864,7 +864,7 @@ namespace casadi {
   }
 
   void SXFunction::export_code_body(const std::string& lang,
-      std::ostream &ss, const Dict& options) const {
+      std::ostream &ss, MatlabExport& mex, const Dict& options) const {
 
     // Default values for options
     casadi_int indent_level = 0;

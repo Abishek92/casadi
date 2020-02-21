@@ -32,6 +32,7 @@
 #include "casadi_common.hpp"
 #include "sparsity_interface.hpp"
 #include "generic_type.hpp"
+#include "matlab_export.hpp"
 #include <vector>
 #include <list>
 #include <limits>
@@ -871,9 +872,10 @@ namespace casadi {
     *               With this option true, a numeric matrix will be constructed
      * \endverbatim
      */
-    void export_code(const std::string& lang, std::ostream &stream=casadi::uout(),
+#ifndef SWIG
+    void export_code(const std::string& lang, std::ostream &stream, MatlabExport& mex,
        const Dict& options=Dict()) const;
-
+#endif // SWIG
     /// Readable name of the public class
     static std::string type_name() {return "Sparsity";}
 

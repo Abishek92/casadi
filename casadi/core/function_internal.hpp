@@ -626,7 +626,7 @@ namespace casadi {
 
     /** \brief Export function in a specific language */
     virtual void export_code(const std::string& lang,
-      std::ostream &stream, const Dict& options) const;
+      std::ostream &stream, MatlabExport& mex, const Dict& options) const;
 
     /** \brief Serialize type information */
     void serialize_type(SerializingStream &s) const override;

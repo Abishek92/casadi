@@ -82,7 +82,7 @@ namespace casadi {
   }
 
   template<> void CASADI_EXPORT DM::export_code(const std::string& lang,
-       std::ostream &stream, const Dict& options) const {
+       std::ostream &stream, MatlabExport& mex, const Dict& options) const {
 
     casadi_assert(lang=="matlab", "Only matlab language supported for now.");
 
@@ -150,12 +150,7 @@ namespace casadi {
       stream << indent << name << "_nz = ones(1, " << d.size() << ")*" << d[0] << ";" << std::endl;
     } else {
       // Export nonzeros
-      stream << indent << name << "_nz = [";
-      for (casadi_int i=0;i<d.size();++i) {
-        stream << d[i] << " ";
-        if ((i+1)%20 == 0) stream << "..." << std::endl << indent << "  ";
-      }
-      stream << "];" << std::endl;
+      stream << indent << name << "_nz = "+ mex.save(d) + ";";
     }
 
     // Reset stream properties
@@ -174,7 +169,7 @@ namespace casadi {
       opts["indent_level"] = indent_level;
       opts["name"] = name;
       opts["indent_level"] = opt_inline;
-      sparsity().export_code(lang, stream, opts);
+      sparsity().export_code(lang, stream, mex, opts);
       stream << indent << name << " = sparse(" << name << "_i, " << name << "_j, ";
       stream << name << "_nz, ";
       stream << size1() << ", " << size2() << ");" << endl;

@@ -153,11 +153,11 @@ namespace casadi {
 
     /** \brief Export function in a specific language */
     void export_code(const std::string& lang,
-      std::ostream &stream, const Dict& options) const override;
+      std::ostream &stream, MatlabExport& mex, const Dict& options) const override;
 
     /** \brief Export function body in a specific language */
     virtual void export_code_body(const std::string& lang,
-        std::ostream &stream, const Dict& options) const = 0;
+        std::ostream &stream, MatlabExport& mex, const Dict& options) const = 0;
 
     /** \brief Is codegen supported? */
     bool has_codegen() const override { return true;}
@@ -925,7 +925,7 @@ namespace casadi {
 
   template<typename DerivedType, typename MatType, typename NodeType>
   void XFunction<DerivedType, MatType, NodeType>
-  ::export_code(const std::string& lang, std::ostream &stream, const Dict& options) const {
+  ::export_code(const std::string& lang, std::ostream &stream, MatlabExport& mex, const Dict& options) const {
 
     casadi_assert(!has_free(), "export_code needs a Function without free variables");
 
@@ -934,6 +934,8 @@ namespace casadi {
     // start function
     stream << "function [varargout] = " << name_ << "(varargin)" << std::endl;
 
+    stream << "  " << mex.load() << std::endl;
+
     // Allocate space for output argument (segments)
     for (casadi_int i=0;i<n_out_;++i) {
       stream << "  argout_" << i <<  " = cell(" << nnz_out(i) << ",1);" << std::endl;
@@ -941,7 +943,7 @@ namespace casadi {
 
     Dict opts;
     opts["indent_level"] = 1;
-    export_code_body(lang, stream, opts);
+    export_code_body(lang, stream, mex, opts);
 
     // Process the outputs
     for (casadi_int i=0;i<n_out_;++i) {
@@ -956,7 +958,7 @@ namespace casadi {
         opts["name"] = "sp";
         opts["indent_level"] = 1;
         opts["as_matrix"] = false;
-        out.export_code("matlab", stream, opts);
+        out.export_code("matlab", stream, mex, opts);
         stream << "  varargout{" << i+1 <<  "} = ";
         stream << "sparse(sp_i, sp_j, vertcat(argout_" << i << "{:}), sp_m, sp_n);" << std::endl;
       }

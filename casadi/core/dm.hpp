@@ -58,7 +58,7 @@ namespace casadi {
   expm_const(const DM& A, const DM& t);
 
   template<> void DM::export_code(const std::string& lang,
-       std::ostream &stream, const Dict& options) const;
+       std::ostream &stream, MatlabExport& mex, const Dict& options) const;
 
   template<>
   Dict DM::info() const;

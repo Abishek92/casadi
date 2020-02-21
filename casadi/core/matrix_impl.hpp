@@ -1437,7 +1437,7 @@ namespace casadi {
 
   template<typename Scalar>
   void Matrix<Scalar>::export_code(const std::string& lang,
-       std::ostream &stream, const Dict& options) const {
+       std::ostream &stream, MatlabExport& mex, const Dict& options) const {
     casadi_error("'export_code' not defined for " + type_name());
   }
 

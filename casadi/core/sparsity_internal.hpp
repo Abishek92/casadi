@@ -613,7 +613,7 @@ namespace casadi {
     void spy_matlab(const std::string& mfile) const;
 
     /** \brief Export sparsity in Matlab format */
-    void export_code(const std::string& lang, std::ostream &stream,
+    void export_code(const std::string& lang, std::ostream &stream, MatlabExport& mex,
        const Dict& options) const;
 
     /// Propagate sparsity through a linear solve

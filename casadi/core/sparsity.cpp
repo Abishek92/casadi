@@ -755,9 +755,9 @@ namespace casadi {
     (*this)->spy_matlab(mfile);
   }
 
-  void Sparsity::export_code(const std::string& lang, std::ostream &stream,
+  void Sparsity::export_code(const std::string& lang, std::ostream &stream, MatlabExport& mex,
       const Dict& options) const {
-    (*this)->export_code(lang, stream, options);
+    (*this)->export_code(lang, stream, mex, options);
   }
 
   void Sparsity::spy(std::ostream &stream) const {
