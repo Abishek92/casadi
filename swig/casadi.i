@@ -119,11 +119,12 @@
 
     // Flush the command window buffer (needed in gui mode)
     static void mexflush(bool error) {
-      if (!utIsInterruptPending()) {
-        if (mexEvalString("drawnow('update');pause(0.0001);")) {
-          utSetInterruptPending(true);
-        }
-      }
+      mexEvalString("drawnow('update');pause(0.0001);");
+      //if (!utIsInterruptPending()) {
+      //  if (mexEvalString("drawnow('update');pause(0.0001);")) {
+      //    utSetInterruptPending(true);
+      //  }
+      //}
     }
 #endif
 
@@ -140,11 +141,12 @@
     extern "C" bool utIsInterruptPending();
 
     static bool mexcheckinterrupted() {
-      return utIsInterruptPending();
+      return false;
+      //return utIsInterruptPending();
     }
 
     void mexclearinterrupted() {
-      utSetInterruptPending(false);
+      //utSetInterruptPending(false);
     }
 
 #endif
